@@ -17,7 +17,7 @@ pip install -r requirements_eval.txt
 ```
 ## Data preparation
 ### Data collection
-Downlod our selected sequential scenes from (LINK1).And nuScenes dataset from (LINK2). The base data in this project are stored in `JSON` files with `0-` prefix.
+Downlod our selected [sequential scenes]<https://huggingface.co/datasets/larswang/kept_datasets/tree/main> and [nuScenes dataset]<[LINK2](https://www.nuscenes.org/nuscenes)>. The base data in this project are stored in `JSON` files with `0-` prefix.
 
 Extract coresponding token of images from nuscenes dataset.
 ```bash
@@ -43,7 +43,7 @@ The first step lora uses 5 `JSON` files in `training/spatial-.json`
 
 The second step lora uses 1 `JSON` file in `training/track_pretrain.json`
 
-The third step lora uses `2-sequential_pretrain_data_without_status.json` and `2-sequential_pretrain_data_without_status.json`
+The third step lora uses `2-sequential_pretrain_data_without_status.json` or `2-sequential_pretrain_data_with_status.json` for different inference condition.
 ## Model inference
 ```bash
 conda activate inference
