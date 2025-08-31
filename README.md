@@ -17,14 +17,15 @@ pip install -r requirements_eval.txt
 ```
 ## Data preparation
 ### Data collection
-Downlod our selected sequential scenes from (LINK1).And nuScenes dataset from (LINK2).the base data in this project are stored in `JSON` files with `0-` prefix.
+Downlod our selected sequential scenes from (LINK1).And nuScenes dataset from (LINK2). The base data in this project are stored in `JSON` files with `0-` prefix.
+
 Extract coresponding token of images from nuscenes dataset.
 ```bash
 python 0-extract_data_from_nuScenes.py --sample /data/nuscenes_dataset/v1.0-trainval/sample_data.json --input 0-sequential_scenes_val.json --output 0-sequential_scenes_sample_val.json
 python 0-extract_data_from_nuScenes.py --sample /data/nuscenes_dataset/v1.0-trainval/sample_data.json --input 0-sequential_scenes_train.json --output 0-sequential_scenes_sample_train.json
 ```
 ### Data aligned
-Find ego status in nuScenes dataset and merge all selected data in one JSON files.
+Find ego status in nuScenes dataset and merge all selected data in one `JSON` file with `1-` prefix.
 ```bash
 python 0_1-merge_scenes&data.py --sample 0-sequential_scenes_sample_val.json --scenes 0-sequential_scenes_val.json --out 1-aligned_scenes_data_val.json
 python 0_1-merge_scenes&data.py --sample 0-sequential_scenes_sample_train.json --scenes 0-sequential_scenes_train.json --out 1-aligned_scenes_data_train.json  
@@ -38,16 +39,16 @@ python 1_2-train_lora_data_format_converter.py --input 1-aligned_scenes_data_val
 ## Model finetuning
 We use `LLamafactory`(LINK3) to fintune `Qwen2-vl-2B`(LINK4).
 
-The first step lora uses 5 JSON files in `training/spatial-.json`
+The first step lora uses 5 `JSON` files in `training/spatial-.json`
 
-The second step lora uses 1 JSON file in `training/track_pretrain.json`
+The second step lora uses 1 `JSON` file in `training/track_pretrain.json`
 
 The third step lora uses `2-sequential_pretrain_data_without_status.json` and `2-sequential_pretrain_data_without_status.json`
 ## Model inference
 ```bash
 conda activate inference
 ```
-Using different commands to run model inference in different conditions.All the prediction results are stored in `JSON` files with `4-` prefix.
+Using different commands to run model inference in different conditions. All the prediction results are stored in `JSON` files with `4-` prefix.
 ```bash
 python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top1.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 1 --out /path/to/4-**output**.json
 python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top2.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 2 --out /path/to/4-**output**.json
@@ -63,7 +64,7 @@ python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-re
 conda activate eval
 ```
 ### Add valid results
-Replace --pred with `4-` prefix files got in last step.Eval_avalible `JSON` is with `5-`prefix
+Replace --pred with `4-` prefix files got in last step. Eval_avalible `JSON` is with `5-`prefix
 ```
 python eval/add_valid_res_in_json.py --basedata /path/to/1-aligned_scenes_data_val.json --pred path/to/4-**output**.json --output 5-**eval**.json
 ```
