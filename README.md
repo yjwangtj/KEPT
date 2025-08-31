@@ -61,6 +61,7 @@ python embedding_database.py
 cd retrieving/
 python retrieving_hnsw.py
 ```
+This step allows to get the Top-K retrieval results for the following inference.
 
 ## Model finetuning
 We use [LLamafactory](https://github.com/hiyouga/LLaMA-Factory) to fintune [Qwen2-vl-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct).
