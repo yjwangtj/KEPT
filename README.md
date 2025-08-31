@@ -37,6 +37,24 @@ python 1_2-train_lora_data_format_converter.py --input 1-aligned_scenes_data_val
 ```
 ## Model finetuning
 We use `LLamafactory`(LINK3) to fintune `Qwen2-vl-2B`(LINK4).
+
 The first step lora uses 5 JSON files in `training/spatial-.json`
+
 The second step lora uses 1 JSON file in `training/track_pretrain.json`
+
 The third step lora uses `2-sequential_pretrain_data_without_status.json` and `2-sequential_pretrain_data_without_status.json`
+## Model inference
+``bash
+conda activate inference
+```
+Using different commands to run model inference in different conditions.
+```bash
+python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top1.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 1 --out /path/to/4-**output**.json
+python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top2.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 2 --out /path/to/4-**output**.json
+python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top3.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 3 --out /path/to/4-**output**.json
+python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top4.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 4 --out /path/to/4-**output**.json
+python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top1.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 1 --out /path/to/4-**output**.json --withstatus
+python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top2.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 2 --out /path/to/4-**output**.json --withstatus
+python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top3.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 3 --out /path/to/4-**output**.json --withstatus
+python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-retrieval_results_top4.json --val /path/to/1-aligned_scenes_data_val.json --db /path/to/1-aligned_scenes_data_train.json --topk 4 --out /path/to/4-**output**.json --withstatus
+```
