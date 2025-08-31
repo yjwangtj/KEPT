@@ -17,7 +17,7 @@ pip install -r requirements_eval.txt
 ```
 ## Data preparation
 ### Data collection
-Downlod our selected [sequential scenes]<https://huggingface.co/datasets/larswang/kept_datasets/tree/main> and [nuScenes dataset]<[LINK2](https://www.nuscenes.org/nuscenes)>. The base data in this project are stored in `JSON` files with `0-` prefix.
+Downlod our selected [sequential scenes](https://huggingface.co/datasets/larswang/kept_datasets/tree/main) and [nuScenes dataset](https://www.nuscenes.org/nuscenes). The base data in this project are stored in `JSON` files with `0-` prefix.
 
 Extract coresponding token of images from nuscenes dataset.
 ```bash
