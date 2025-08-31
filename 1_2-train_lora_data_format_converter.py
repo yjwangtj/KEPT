@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import json, argparse
 
 system = '''You are an autonomous driving trajectory prediction assistant.
@@ -22,8 +21,8 @@ Output strictly in JSON format like:
 , with each value rounded to 1 decimal place. '''
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--input",  dest="in_path",  required=True)   # 1-****_train.json
-parser.add_argument("--output", dest="out_path", required=True)   # 2-****_sequential_train.json
+parser.add_argument("--input",  dest="in_path",  required=True)   # 1-aligned_scenes_data_val.json
+parser.add_argument("--output", dest="out_path", required=True)   # 2-sequential_pretrain_data.json
 parser.add_argument("--status", action="store_true", help="set it True to add ego status")
 args = parser.parse_args()
 

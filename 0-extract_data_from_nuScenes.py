@@ -2,8 +2,8 @@ import json, argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--sample", required=True)  # /data/nuscenes_dataset/v1.0-trainval/sample_data.json
-parser.add_argument("--input", required=True)    # 0-sequential_scenes_train.json or 0-sequential_scenes_train.json
-parser.add_argument("--output", required=True)     # output_path: 0-****_sample_val.json or 0-****_sample_train.json
+parser.add_argument("--input", required=True)    # 0-sequential_scenes_val.json or 0-sequential_scenes_train.json
+parser.add_argument("--output", required=True)     #  0-****_sample_val.json    or 0-****_sample_train.json
 args = parser.parse_args()
 
 with open(args.sample, "r", encoding="utf-8") as f:

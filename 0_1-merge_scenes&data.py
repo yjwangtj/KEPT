@@ -3,13 +3,13 @@ from find_ego_status import can_from_sample_token
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--sample", required=True)   #  0-****_sample_val.json          or 0-****_sample_train.json
-parser.add_argument("--vals",   required=True)   #  0-sequential_scenes_val.json    or 0-sequential_scenes_train.json
+parser.add_argument("--scenes",   required=True)   #  0-sequential_scenes_val.json    or 0-sequential_scenes_train.json
 parser.add_argument("--out",    required=True)   #  1-aligned_scenes_data_val.json  or 1-aligned_scenes_data_train.json
 args = parser.parse_args()
 
 with open(args.sample, "r", encoding="utf-8") as f1:
     ls1 = json.load(f1)
-with open(args.vals, "r", encoding="utf-8") as f2:
+with open(args.scenes, "r", encoding="utf-8") as f2:
     ls2 = json.load(f2)
 
 datas = []
