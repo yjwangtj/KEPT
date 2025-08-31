@@ -64,7 +64,7 @@ python 3_4-KEPT_inference.py --model_dir /path/to/model --retrieval path/to/3-re
 conda activate eval
 ```
 ### Add valid results
-Replace --pred with `4-` prefix files got in last step. Eval_avalible `JSON` is with `5-`prefix
+Replace `--pred` with `4-` prefix files got in last step. Eval_avalible `JSON` is with `5-` prefix.
 ```
 python eval/add_valid_res_in_json.py --basedata /path/to/1-aligned_scenes_data_val.json --pred path/to/4-**output**.json --output 5-**eval**.json
 ```
