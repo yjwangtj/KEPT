@@ -37,13 +37,13 @@ python 1_2-train_lora_data_format_converter.py --input 1-aligned_scenes_data_val
 python 1_2-train_lora_data_format_converter.py --input 1-aligned_scenes_data_val.json --output 2-sequential_pretrain_data_without_status.json
 ```
 ## Model finetuning
-We use `LLamafactory`(LINK3) to fintune `Qwen2-vl-2B`(LINK4).
+We use [LLamafactory]((https://github.com/hiyouga/LLaMA-Factory)) to fintune [Qwen2-vl-2B](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct).
 
-The first step lora uses 5 `JSON` files in `training/spatial-.json`
+The first step lora dataset contains 5 `JSON` files in `training/spatial-.json`
 
-The second step lora uses 1 `JSON` file in `training/track_pretrain.json`
+The second step lora dataset contains 1 `JSON` file in `training/track_pretrain.json`
 
-The third step lora uses `2-sequential_pretrain_data_without_status.json` or `2-sequential_pretrain_data_with_status.json` for different inference condition.
+The third step lora dataset contains `2-sequential_pretrain_data_without_status.json` or `2-sequential_pretrain_data_with_status.json` for different inference condition.
 ## Model inference
 ```bash
 conda activate inference
