@@ -1,6 +1,13 @@
 # KEPT
 KEPT: Knowledge-Enhanced Trajectory Prediction of Consecutive Driving Frames with Vision-Language Models
 ## Environment Setup
+### Embedding and Retrieving Environment
+Create a conda virtual environment which is used for model inference
+```bash
+conda create -n rag python==3.11 -y
+conda activate rag
+pip install -r requirements_rag.txt
+```
 ### Inference Environment
 Create a conda virtual environment which is used for model inference
 ```bash
@@ -36,6 +43,25 @@ Convert data format for next step lora finetuning and stored in `JSON` files wit
 python 1_2-train_lora_data_format_converter.py --input 1-aligned_scenes_data_val.json --output 2-sequential_pretrain_data_with_status.json --status
 python 1_2-train_lora_data_format_converter.py --input 1-aligned_scenes_data_val.json --output 2-sequential_pretrain_data_without_status.json
 ```
+## Encoder Training
+```bash
+cd vfsf_training/
+python train_contrastive_hard_negative.py
+```
+
+## Embedding and Retrieving
+### Embedding
+Prepare the nuScenes dataset and align the data paths.
+```bash
+cd embedding/
+python embedding_database.py
+```
+### Retrieving
+```bash
+cd retrieving/
+python retrieving_hnsw.py
+```
+
 ## Model finetuning
 We use [LLamafactory](https://github.com/hiyouga/LLaMA-Factory) to fintune [Qwen2-vl-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct).
 
