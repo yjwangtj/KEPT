@@ -2,9 +2,9 @@ import json, argparse
 from find_ego_status import can_from_sample_token
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--sample", required=True)   #  0-****_sample_val.json          or 0-****_sample_train.json
-parser.add_argument("--scenes",   required=True)   #  0-sequential_scenes_val.json    or 0-sequential_scenes_train.json
-parser.add_argument("--out",    required=True)   #  1-aligned_scenes_data_val.json  or 1-aligned_scenes_data_train.json
+parser.add_argument("--sample", required=True)
+parser.add_argument("--scenes",   required=True)
+parser.add_argument("--out",    required=True)
 args = parser.parse_args()
 
 with open(args.sample, "r", encoding="utf-8") as f1:
@@ -38,3 +38,4 @@ with open(args.out, "w", encoding="utf-8") as f:
     json.dump(datas, f, indent=4, ensure_ascii=False)
 
 print(f"[Info] saved {len(datas)} samples。")
+
