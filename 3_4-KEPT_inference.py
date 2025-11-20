@@ -4,6 +4,7 @@ from tqdm import tqdm
 from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
 from qwen_vl_utils import process_vision_info
 
+
 '''
 Usage:
     python 3_4-KEPT_inference.py \
@@ -188,3 +189,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
