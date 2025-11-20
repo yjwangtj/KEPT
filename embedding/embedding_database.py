@@ -1,5 +1,3 @@
-# encode_sequences_to_pkl.py
-
 import os
 import json
 import pickle
@@ -8,12 +6,8 @@ import torch.nn as nn
 from torchvision import transforms
 from PIL import Image
 
-# import your encoder definitions
 from vfsf import FreqSpatialFusion, TemporalFusionEncoder
 
-# ----------------------------
-# ProjectionHead definition (must match training)
-# ----------------------------
 class ProjectionHead(nn.Module):
     def __init__(self, in_dim=64, hidden_dim=256, out_dim=128, dropout=0.3):
         super().__init__()
@@ -30,7 +24,6 @@ class ProjectionHead(nn.Module):
 def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    # --- Load trained weights ---
     ckpt = torch.load('best_contrastive_hard.pth', map_location=device)
     fsf = FreqSpatialFusion(out_channels=64, patch_size=16, local_checkpoint=None)
     encoder = TemporalFusionEncoder(
@@ -46,7 +39,6 @@ def main():
     encoder.eval()
     proj_head.eval()
 
-    # --- Prepare transform (deterministic) ---
     transform = transforms.Compose([
         transforms.Resize((224,224)),
         transforms.ToTensor(),
@@ -54,31 +46,26 @@ def main():
                              [0.229,0.224,0.225])
     ])
 
-    # --- Read the new JSON ---
     with open('3.5_refined_train0824.json', 'r') as f:
         entries = json.load(f)
 
     embeddings = []
-    # optional: keep a list of identifiers
     ids = []
 
     with torch.no_grad():
         for idx, entry in enumerate(entries):
             img_paths = entry['images'][:7]
-            # load and preprocess
             imgs = [transform(Image.open(p).convert('RGB')) for p in img_paths]
-            seq = torch.stack(imgs, dim=0).unsqueeze(0).to(device)  # (1,7,3,224,224)
-            # forward
-            feat = encoder(seq)            # (1,64)
-            emb = proj_head(feat)          # (1,128)
-            emb_np = emb.cpu().squeeze(0).numpy()  # (128,)
+            seq = torch.stack(imgs, dim=0).unsqueeze(0).to(device) 
+            feat = encoder(seq) 
+            emb = proj_head(feat) 
+            emb_np = emb.cpu().squeeze(0).numpy()
             embeddings.append(emb_np)
             ids.append(idx)
 
-    # --- Save to pickle ---
     out = {
-        'ids': ids,               # list of entry indices
-        'embeddings': embeddings  # list of numpy arrays
+        'ids': ids,      
+        'embeddings': embeddings
     }
     with open('database_embeddings_refined0824.pkl', 'wb') as pf:
         pickle.dump(out, pf)
