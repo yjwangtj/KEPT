@@ -7,11 +7,6 @@ import numpy as np
 from nuscenes import NuScenes
 from pyquaternion import Quaternion
 
-'''
-Usage:
-    python eval_collision.py --input 5-**eval**.json --ignore-z
-'''
-
 def get_ego_pose_SE3(nusc: NuScenes, sample_token: str):
 
     sample = nusc.get('sample', sample_token)
@@ -161,7 +156,7 @@ def get_ann_boxes_in_t0(nusc: NuScenes,
         d_body0 = R_g2e_0.dot(d_global)
         x, y, z = float(d_body0[0]), float(d_body0[1]), float(d_body0[2])
 
-        w, l, h = [float(s) for s in ann['size']]  # [width, length, height]
+        w, l, h = [float(s) for s in ann['size']] 
         if inflate != 0.0:
             w = max(0.0, w + inflate * 2.0)
             l = max(0.0, l + inflate * 2.0)
@@ -191,7 +186,7 @@ def evaluate_counts_for_record(nusc: NuScenes,
                                allowed_prefix: Tuple[str, ...],
                                ignore_z: bool) -> Dict[str, Any]:
     st = rec.get('sample_token') or rec.get('token')
-    preds = extract_pred_field(rec)  # {1..6:(x,y)}
+    preds = extract_pred_field(rec)
     next_tokens = chain_next_samples(nusc, st, steps=6)
 
     t0, R_e2g_0, R_g2e_0 = get_ego_pose_SE3_cached(nusc, st)
@@ -268,8 +263,8 @@ def evaluate_counts_for_record(nusc: NuScenes,
 
     return {
         "sample_token": st,
-        "per_step_collisions": per_step_collisions,  # [int/None]*6
-        "per_step_possible": per_step_possible       # [int/None]*6
+        "per_step_collisions": per_step_collisions,
+        "per_step_possible": per_step_possible
     }
 
 def eval_file(dataroot: str,
@@ -353,3 +348,4 @@ if __name__ == "__main__":
         allowed_prefix_str=args.allowed_prefix,
         ignore_z=args.ignore_z
     )
+
