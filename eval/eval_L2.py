@@ -6,11 +6,6 @@ from typing import Dict, Tuple, Any
 from nuscenes import NuScenes
 from pyquaternion import Quaternion
 
-'''
-Usage:
-    python eval_L2.py --input 5-**eval**.json 
-'''
-
 def get_ego_pose_SE3(nusc: NuScenes, sample_token: str):
 
     sample = nusc.get('sample', sample_token)
@@ -54,10 +49,9 @@ def normalize_pred_dict(pred_like: Any) -> Dict[int, Tuple[float, float]]:
             t = float(s.split()[0])
         except Exception:
             t = float(s)
-        idx = min(range(6), key=lambda i: abs(targets[i] - t)) + 1  # 1..6
+        idx = min(range(6), key=lambda i: abs(targets[i] - t)) + 1
         out[idx] = (x, y)
     return out
-
 
 def project_future_gt_to_t0(nusc: NuScenes, sample_token: str, steps: int = 6) -> Dict[int, Tuple[float, float]]:
     t0, R_e2g_0, R_g2e_0 = get_ego_pose_SE3(nusc, sample_token)
@@ -67,20 +61,17 @@ def project_future_gt_to_t0(nusc: NuScenes, sample_token: str, steps: int = 6) -
         t_i, _, _ = get_ego_pose_SE3(nusc, tok)
         d_global = t_i - t0
         d_body_0 = R_g2e_0.dot(d_global)
-        gt[i] = (float(d_body_0[0]), float(d_body_0[1]))  # 只用平面
+        gt[i] = (float(d_body_0[0]), float(d_body_0[1]))
     return gt
-
 
 def l2(a: Tuple[float, float], b: Tuple[float, float]) -> float:
     return float(np.hypot(a[0]-b[0], a[1]-b[1]))
-
 
 def extract_pred_field(rec: Dict[str, Any]) -> Dict[int, Tuple[float, float]]:
     for key in ['predict_traj']:
         if key in rec and rec[key] not in (None, ''):
             return normalize_pred_dict(rec[key])
     raise KeyError("no match found")
-
 
 def eval_file(dataroot: str, version: str, input_json: str, dump_json: str = None):
     nusc = NuScenes(version=version, dataroot=dataroot, verbose=False)
@@ -97,8 +88,8 @@ def eval_file(dataroot: str, version: str, input_json: str, dump_json: str = Non
             continue
 
         try:
-            preds = extract_pred_field(rec)        # {1..6:(x,y)}
-            gts   = project_future_gt_to_t0(nusc, st, steps=6)  # {1..6:(x,y)}
+            preds = extract_pred_field(rec) 
+            gts   = project_future_gt_to_t0(nusc, st, steps=6)
         except Exception as e:
             print(f"[{idx}] failed {st}: {e}")
             continue
@@ -144,7 +135,7 @@ def eval_file(dataroot: str, version: str, input_json: str, dump_json: str = Non
                 sums[k] += v
                 cnts[k] += 1
     means = []
-    for k in all_steps:  # ["0.5s","1.0s","1.5s","2.0s","2.5s","3.0s"]
+    for k in all_steps:
         mean = (sums[k] / cnts[k]) if cnts[k] > 0 else float('nan')
         means.append(mean)
 
@@ -160,3 +151,4 @@ if __name__ == "__main__":
     args = ap.parse_args()
 
     eval_file(args.dataroot, args.version, args.input, dump_json=args.output)
+
