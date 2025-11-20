@@ -98,4 +98,3 @@ def can_from_sample_token(sample_token):
         "yaw_rad": yaw_rad,
         "time_offset_us": dt_align
     }
-
