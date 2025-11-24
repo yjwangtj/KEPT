@@ -48,6 +48,7 @@ python 1_2-train_lora_data_format_converter.py --input 1-aligned_scenes_data_val
 cd vfsf_training/
 python train_contrastive_hard_negative.py
 ```
+We also provide different editions of the encoder, namely the frequency-only `vfsf_frequency_only.py` and the spatial-only `vfsf_spatial_only`. The corresponding training codes are `train_contrastive_hard_negative_frequency.py` and `train_contrastive_hard_negative_spatial.py`.
 
 ## Embedding and Retrieving
 ### Embedding
@@ -62,6 +63,8 @@ cd retrieving/
 python retrieving_hnsw.py
 ```
 This step allows to get the Top-K retrieval results for the following inference.
+During the embedding and retrieving pipelines, if the vision encoder is changed, it will be necessary to copy the correct edition of the encoder under the corresponding repository.
+
 
 ## Model finetuning
 We use [LLamafactory](https://github.com/hiyouga/LLaMA-Factory) to fintune [Qwen2-vl-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct).
