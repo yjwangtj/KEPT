@@ -98,7 +98,7 @@ Replace `--pred` with `4-` prefix files got in last step. Eval_avalible `JSON` i
 ```
 python eval/add_valid_res_in_json.py --basedata /path/to/1-aligned_scenes_data_val.json --pred path/to/4-**output**.json --output 5-**eval**.json
 ```
-### Caculation
+### Calculation
 ```bash
 python eval_collision.py --input 5-**eval**.json --ignore-z
 python eval_L2.py --input 5-**eval**.json
